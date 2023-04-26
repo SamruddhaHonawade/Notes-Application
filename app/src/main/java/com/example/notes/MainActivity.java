@@ -2,6 +2,7 @@ package com.example.notes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Show();
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Dialog dialog = new Dialog(MainActivity.this);
 
-                dialog.setContentView(R.layout.notes_dialog);
+                dialog.setContentView(R.layout.entry_dialog);
 
                 Button notesave_btn = dialog.findViewById(R.id.notesave_btn);
 
@@ -89,22 +90,23 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        dialog.dismiss();
+
 
                         String title = note_title.getText().toString();
 
                         String content = note_content.getText().toString();
 
-                        if (!content.equals("")) {
+                        if (!title.equals("")) {
 
                             localDB.notesDao().addNote(new Notes(title, content));
 
                             Show();
+                            dialog.dismiss();
 
 
                         } else {
 
-                            Toast.makeText(MainActivity.this, "content is mandatory", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Note is mandatory", Toast.LENGTH_SHORT).show();
 
                         }
 

@@ -40,7 +40,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.notes_row,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.linear_row,parent,false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
@@ -50,25 +50,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.note_Re.setText(arrnotes.get(position).getNote_title());
-        Random r = new Random();
-        int red=r.nextInt(255 - 0 + 1)+0;
-        int green=r.nextInt(255 - 0 + 1)+0;
-        int blue=r.nextInt(255 - 0 + 1)+0;
 
-        GradientDrawable draw = new GradientDrawable();
 
-        draw.setColor(Color.rgb(red,green,blue));
-        holder.content_Re.setBackground(draw);
-        holder.cardView.setBackground(draw);
-        holder.note_Re.setBackground(draw);
-
-        holder.content_Re.setText(arrnotes.get(position).getNote_content());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.notes_dialog);
+                dialog.setContentView(R.layout.entry_dialog);
                 Button notesave_btn = dialog.findViewById(R.id.notesave_btn);
 
                 EditText note_title = dialog.findViewById(R.id.note_title);
@@ -92,7 +81,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
                         String content = note_content.getText().toString();
 
-                        if (!content.equals("")) {
+                        if (!title.equals("")) {
 
                             localDB.notesDao().UpdateNotes(new Notes(arrnotes.get(position).getId(),title,content));
 
@@ -152,7 +141,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView note_Re,content_Re;
+        TextView note_Re;
 
         CardView cardView;
 
@@ -161,9 +150,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
             note_Re=itemView.findViewById(R.id.note_Re);
 
-            content_Re=itemView.findViewById(R.id. content_Re);
 
-            cardView =itemView.findViewById(R.id. cardView);
+            cardView =itemView.findViewById(R.id.cardView);
 
 
 
