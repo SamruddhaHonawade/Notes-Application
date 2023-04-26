@@ -1,6 +1,7 @@
 package com.example.notes;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -8,8 +9,11 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -59,7 +63,60 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         holder.note_Re.setBackground(draw);
 
         holder.content_Re.setText(arrnotes.get(position).getNote_content());
-        holder.cardView.setRadius(25);
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.notes_dialog);
+                Button notesave_btn = dialog.findViewById(R.id.notesave_btn);
+
+                EditText note_title = dialog.findViewById(R.id.note_title);
+
+
+                EditText note_content = dialog.findViewById(R.id.note_content);
+
+
+                note_title.setText(arrnotes.get(position).getNote_title());
+
+                note_content.setText(arrnotes.get(position).getNote_content());
+
+                dialog.show();
+
+                notesave_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        String title = note_title.getText().toString();
+
+                        String content = note_content.getText().toString();
+
+                        if (!content.equals("")) {
+
+                            localDB.notesDao().UpdateNotes(new Notes(arrnotes.get(position).getId(),title,content));
+
+
+
+
+
+                        } else {
+
+                            Toast.makeText(context, "content is mandatory", Toast.LENGTH_SHORT).show();
+
+                        }
+                        ((MainActivity)context).Show();
+
+                        dialog.dismiss();
+
+
+                    }
+                });
+
+
+
+            }
+        });
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
