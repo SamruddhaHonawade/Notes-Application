@@ -1,6 +1,9 @@
 package com.example.notes;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         screen1 = findViewById(R.id.screen1);
 
 
+
         // lottieAnimationView.setAnimation(R.raw.notes_anmi);
         //lottieAnimationView.playAnimation();
         //  lottieAnimationView.loop(true);
@@ -58,9 +63,16 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+
+
+
+
 
         Show();
+
+
+
 
 
         createnotes.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
        // lottieAnimationView.setAnimation(View.GONE);
 
         createnotes.setVisibility(View.GONE);
+
+
 
 
 

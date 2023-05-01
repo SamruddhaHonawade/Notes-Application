@@ -50,12 +50,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.note_Re.setText(arrnotes.get(position).getNote_title());
-
-
+        holder.cardView.setCardBackgroundColor(getRandomColorCode());
+        holder.content_Re.setText(arrnotes.get(position).getNote_content());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.entry_dialog);
                 Button notesave_btn = dialog.findViewById(R.id.notesave_btn);
@@ -141,7 +142,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView note_Re;
+        TextView note_Re,content_Re;
 
         CardView cardView;
 
@@ -150,11 +151,20 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
             note_Re=itemView.findViewById(R.id.note_Re);
 
+            content_Re=itemView.findViewById(R.id.content_Re);
+
 
             cardView =itemView.findViewById(R.id.cardView);
 
 
 
         }
+    }
+    public int getRandomColorCode(){
+
+        Random random = new Random();
+
+        return Color.argb(255, random.nextInt(256), random.nextInt(256),     random.nextInt(256));
+
     }
 }
